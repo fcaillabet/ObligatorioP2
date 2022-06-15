@@ -39,11 +39,6 @@ namespace WebAppObligatorio2.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
@@ -89,21 +84,38 @@ namespace WebAppObligatorio2.Controllers
 
         public IActionResult AltaServicioLocal()
         {
-            ViewBag.local = s.AltaServicioLocal();
-            return View(s.GetPlatos());
+            string rol = HttpContext.Session.GetString("LogueadoRol");
+            if (rol == "Cliente")
+            {
+                return View(s.GetPlatos());
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
         }
 
         [HttpPost]
-        public IActionResult AltaServicioLocal(int id, Plato p, int c)
+        public IActionResult AltaServicioLocal(int plato, int cant, int mozo, int mesa, int cantPersonas)
         {
-            Servicio serv = s.GetServicioPorIdLocal(id);
-            s.AgregarPlato(p, c, serv);
-            return View();
+            Plato p = s.ObtenerPlato(plato);
+            int id = (int)HttpContext.Session.GetInt32("LogueadoId");
+            Servicio serv = s.AltaServicioLocal(mesa, mozo, cantPersonas, id);
+            s.AgregarPlato(p, cant, serv);
+            return View(s.GetPlatos());
         }
 
         public IActionResult AltaServicioDelivery()
         {
-            return View(s.GetPlatos());
+            string rol = HttpContext.Session.GetString("LogueadoRol");
+            if (rol == "Cliente")
+            {
+                return View(s.GetPlatos());
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }  
         }
 
         [HttpPost]

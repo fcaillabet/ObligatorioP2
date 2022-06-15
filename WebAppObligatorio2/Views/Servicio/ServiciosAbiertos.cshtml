@@ -10,10 +10,10 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Fecha)
+                Fecha
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.PrecioFinal)
+                Precio total
             </th>
             <th></th>
         </tr>
@@ -28,7 +28,7 @@
                 @Html.DisplayFor(modelItem => item.PrecioFinal)
             </td>
             <td>
-                @Html.ActionLink("Añadir", "Aniadir", new {  id=item.Id }) 
+                @Html.ActionLink("Añadir plato", "Aniadir", new {  id=item.Id }) 
             </td>
         </tr>
 }

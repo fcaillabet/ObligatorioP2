@@ -17,7 +17,7 @@ namespace Dominio
 
         public Double PrecioFinal { get; set; }
 
-        public string Estado { get; set; } = "Abierta";
+        public string Estado { get; set; } = "Abierta"; //Abierta, Cerrada
 
         public string ObtenerNombreApellidoRepartidor(Delivery serv)
         {

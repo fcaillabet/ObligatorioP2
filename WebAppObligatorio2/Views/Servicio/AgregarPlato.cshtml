@@ -1,0 +1,30 @@
+﻿@using Microsoft.AspNetCore.Http
+@model IEnumerable<Dominio.Plato>
+
+
+
+@{
+    ViewData["Title"] = "AgregarPlato";
+}
+
+<h1>Index</h1>
+<form method="post" id="formAgregarPlato">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-group">
+        <label class="control-label">Plato</label>
+        <select name="plato">
+            @foreach (var item in Model)
+            {
+                <option value="@item.Id">@item.Nombre</option>
+
+            }
+        </select>
+    </div>
+    <div class="form-group">
+        <label class="control-label">Cantidad</label>
+        <input type="number" id="txtCantidad" name="cant" class="form-control" />
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Agregar plato" class="btn btn-primary" />
+    </div>
+</form>

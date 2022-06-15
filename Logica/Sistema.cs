@@ -46,7 +46,7 @@ namespace Dominio
             List<Servicio> ret = new List<Servicio>();
             foreach (Servicio s in servicios)
             {
-                if(s.Cliente.id == idLogueado)
+                if(s.Cliente.id == idLogueado && s.Estado == "Abierta")
                 {
                     ret.Add(s);
                 }
@@ -60,6 +60,17 @@ namespace Dominio
             {
                 instancia = new Sistema();
             }return instancia;
+        }
+
+        public Servicio ObtenerServicio(int id)
+        {
+            foreach (Servicio s in servicios)
+            {
+                if (s.Id == id)
+                {
+                    return s;
+                }
+            }return null;
         }
 
         public bool setPrecioMin(double monto)
@@ -113,9 +124,9 @@ namespace Dominio
             return ret;
         }
 
-        public Local AltaServicioLocal()
+        public Local AltaServicioLocal(int numMesa, int mozoId, int cantComensales, int clienteId)
         {
-            Local n = new Local();
+            Local n = new Local(numMesa, GetMozoId(mozoId), cantComensales, GetClienteId(clienteId));
             if (n != null)
             {
                 servicios.Add(n);
@@ -125,6 +136,18 @@ namespace Dominio
             {
                 return null;
             }
+        }
+
+        public Mozo GetMozoId(int Id)
+        {
+            foreach (Mozo m in mozos)
+            {
+                if (m.id == Id)
+                {
+                    return m;
+                }
+            }
+            return null;
         }
 
         public Plato ObtenerPlato(int platoId)
@@ -140,8 +163,7 @@ namespace Dominio
 
         public Delivery AltaServicioDelivery(string direccion, int repartidorId, double distancia, int clienteId)
         {
-            Cliente c = GetClienteId(clienteId);
-            Delivery n = new Delivery(direccion, GetRepartidorId(repartidorId), distancia, c);
+            Delivery n = new Delivery(direccion, GetRepartidorId(repartidorId), distancia, GetClienteId(clienteId));
             if (n != null)
             {
                 servicios.Add(n);
@@ -444,7 +466,7 @@ namespace Dominio
             AltaCliente(c5, "Walter", "Walter123");
 
             //Precarga mozos
-            Mozo m1 = new Mozo("Moninca", "Mernes", 1);
+            Mozo m1 = new Mozo("Monica", "Mernes", 1);
             Mozo m2 = new Mozo("José", "DaSilva", 2);
             Mozo m3 = new Mozo("Mateo", "Manchez", 3);
             Mozo m4 = new Mozo("Rodrigo", "Pequeño", 4);

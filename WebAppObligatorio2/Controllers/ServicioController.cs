@@ -22,9 +22,7 @@ namespace WebAppObligatorio2.Controllers
             else
             {
                 return RedirectToAction("Index","Home");
-            }
-
-            
+            }    
         }
 
         [HttpPost]
@@ -50,9 +48,31 @@ namespace WebAppObligatorio2.Controllers
             }
         }
 
-        public IActionResult Aniadir(int id)
+        public IActionResult Aniadir(int Id)
         {
-            s.GetServicio();
+            Servicio ser = s.GetServicioPorId(Id);
+            return RedirectToAction("AgregarPlato", "Servicio");
+        }
+
+        public IActionResult AgregarPlato()
+        {
+            string rol = HttpContext.Session.GetString("LogueadoRol");
+            
+            if (rol == "Cliente")
+            {
+                return View(s.GetPlatos());
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+        }
+
+        [HttpPost]
+        public IActionResult AgregarPlato(int plato, int cant, Servicio ser)
+        {
+            Plato p = s.ObtenerPlato(plato);
+            s.AgregarPlato(p, cant, ser);
             return View();
         }
     }
