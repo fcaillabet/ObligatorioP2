@@ -7,10 +7,10 @@ namespace Dominio
     public class Delivery : Servicio
     {
         public string DireccionEnvio { get; set; }
-        public Repartidor Repartidor { get; set; }
+        //public Repartidor Repartidor { get; set; }
         public double Distancia { get; set; }
 
-        
+        public Repartidor GetRepartidor() { return Repartidor; }
 
         public Delivery(string direccion, Repartidor repartidor, double distancia, List<PlatosCantidad> platos, List<Cliente> cliente)
         {
@@ -22,12 +22,8 @@ namespace Dominio
             Fecha = DateTime.Now;
         }
 
-        public string unirNombreApellido()
-        {
-            string nombreMin = Repartidor.Nombre.ToLower();
-            string apellidoMin = Repartidor.Apellido.ToLower();
-            return apellidoMin + " " + nombreMin;
-        }
+        
+        
 
         public override double CalcularPrecio()
         {

@@ -1,0 +1,71 @@
+﻿@model Dominio.Cliente
+
+@{
+    ViewData["Title"] = "AltaCliente";
+}
+
+<h1>AltaCliente</h1>
+
+<h4>Cliente</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="AltaCliente" id="formAltaCliente">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="nombre" class="control-label"></label>
+                <input asp-for="nombre" id="txtNombre" class="form-control" />
+                <span asp-validation-for="nombre" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="apellido" class="control-label"></label>
+                <input asp-for="apellido" id="txtApellido" class="form-control" />
+                <span asp-validation-for="apellido" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Email</label>
+                <input type="text" id="txtEmail" name="Email" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label class="control-label">Usuario</label>
+                <input type="text" id="txtUsuario" name="user" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label class="control-label">Contraseña</label>
+                <input type="password" id="txtContraseña" name="pass" class="form-control" />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Crear" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+<p id="pMensaje">@ViewBag.msg</p>
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+
+    <script>
+        document.querySelector("#formAltaCliente").addEventListener('submit', validarDatos);
+
+        function validarDatos(evento) {
+            evento.preventDefault();
+
+            let nombre = document.querySelector("#txtNombre").value;
+            let apellido = document.querySelector("#txtApellido").value;
+            let email = document.querySelector("#txtEmail").value;
+            let usuario = document.querySelector("#txtUsuario").value;
+            let contraseña = document.querySelector("#txtContraseña").value;
+
+            if (nombre != "" && apellido != "" && email != "" && usuario != "" && contraseña != "") {
+                this.submit();
+            } else {
+                document.querySelector("#pMensaje").innerHTML = "Rellene todo!";
+            }
+        }
+    </script>
+
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

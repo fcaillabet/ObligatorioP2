@@ -6,7 +6,7 @@ namespace Interfaz
 {
     public class Program 
     {
-        private static void Main(string[] args)
+        public static void Main()
         {
              
             Sistema s = new Sistema();
@@ -33,14 +33,16 @@ namespace Interfaz
 
                         foreach (Cliente c in s.GetClientes())
                         {
-
                             Console.WriteLine(c);
                         }
                         Console.ReadKey();
                         break;
 
                     case 3:
-                        Console.WriteLine("Ingrese el apellido y nombre de un repartidor separados con un espacio:");
+                        Console.WriteLine("Ingrese el apellido de un repartidor:");
+                        string apellido = Console.ReadLine();
+
+                        Console.WriteLine("Ingrese el nombre de un repartidor:");
                         string nombre = Console.ReadLine();
 
                         Console.WriteLine("Fecha de inicio");
@@ -50,21 +52,19 @@ namespace Interfaz
                         DateTime f2 = DateTime.Parse(Console.ReadLine());
 
 
-                        List<Servicio> ListaFiltrada = s.GetServiciosRangoFecha(nombre, f1, f2);
+                        List<Servicio> ListaFiltrada = s.GetServiciosRangoFecha(nombre, apellido, f1, f2);
 
                         if (ListaFiltrada.Count > 0)
                         {
 
                             foreach (Servicio serv in ListaFiltrada)
                             {
-
                                 Console.WriteLine(serv);
                             }
                         }
                         else {
                             Console.WriteLine("No hay registros");
                         }
-
                         Console.ReadKey();
                         break;
 
@@ -73,13 +73,13 @@ namespace Interfaz
                         Console.WriteLine("Ingrese un monto");
                         double monto = Double.Parse(Console.ReadLine());
 
-                        if (monto > 0)
+                        if (s.setPrecioMin(monto))
                         {
-                            //s.PrecioMin = monto;
+                            Console.WriteLine("Precio mínimo cambiado a " +monto);
                         }
                         else
                         {
-                            Console.WriteLine("No se ha podido cambiar ya que el límite es 1.");
+                            Console.WriteLine("No se ha podido cambiar.");
                         }
 
                         Console.ReadKey();

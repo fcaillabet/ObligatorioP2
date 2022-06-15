@@ -1,0 +1,48 @@
+﻿@using Microsoft.AspNetCore.Http
+@model IEnumerable<Dominio.Plato>
+
+
+
+@{
+    ViewData["Title"] = "AltaServicioDelivery";
+}
+
+<h1>Index</h1>
+<form method="post" id="formAltaServicio">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-group">
+        <label class="control-label">Plato</label>
+        <select name="plato">
+            @foreach (var item in Model)
+            {
+                <option value="@item.Id">@item.Nombre</option>
+
+            }
+        </select>
+    </div>
+    <div class="form-group">
+        <label class="control-label">Repartidor</label>
+        <select name="repartidor">
+            <option value="11">Mario Lanterna</option>
+            <option value="12">David Zurbano</option>
+            <option value="13">Rocio Gimenez</option>
+            <option value="14">Mauro Bisbal</option>
+            <option value="15">Valentina Turner</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label class="control-label">Cantidad</label>
+        <input type="number" id="txtCantidad" name="cant" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label class="control-label">Dirección</label>
+        <input type="text" id="txtDireccion" name="direccion" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label class="control-label">Distancia (en Km)</label>
+        <input type="number" id="txtDistancia" name="distancia" class="form-control" />
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Crear Servicio" class="btn btn-primary" />
+    </div>
+</form>

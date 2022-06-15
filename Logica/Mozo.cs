@@ -1,27 +1,32 @@
-﻿using System;
+﻿using Logica;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Dominio
 {
-    public class Mozo : IValidacion
+    public class Mozo : Persona, IValidacion 
     {
-        public int Id { get; set; }
-        public string Nombre { get; set; }
-        public string Apellido { get; set; }
+
         public int NumeroFuncionario { get; set; }
 
-        public Mozo(int id, string nombre, string apellido, int numeroFuncionario)
+        public Mozo(string Nombre, string Apellido, int numeroFuncionario)
         {
-            Id = id;
-            Nombre = nombre;
-            Apellido = apellido;
+            id = Sistema.ultimoIdPersona;
+            Sistema.ultimoIdPersona++;
+            nombre = Nombre;
+            apellido = Apellido;
             NumeroFuncionario = numeroFuncionario;
+        }
+
+        public Mozo()
+        {
+
         }
 
         public bool validarString(string palabra)
         {
-            bool ret = false;
+            bool ret = true;
 
             if (palabra != "")
             {
@@ -29,7 +34,7 @@ namespace Dominio
                 {
                     if (char.IsNumber(palabra[i]))
                     {
-                        ret = true;
+                        ret = false;
                     }
                 }
             }
@@ -41,7 +46,7 @@ namespace Dominio
         public bool EsValido()
         {
             bool ret = false;
-            if (validarString(Nombre) && validarString(Apellido))
+            if (validarString(nombre) && validarString(apellido))
             {
                 ret = true;
             }

@@ -1,0 +1,36 @@
+﻿@model IEnumerable<Dominio.Servicio>
+
+@{
+    ViewData["Title"] = "ServiciosAbiertos";
+}
+
+<h1>ServiciosAbiertos</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Fecha)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PrecioFinal)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Fecha)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PrecioFinal)
+            </td>
+            <td>
+                @Html.ActionLink("Añadir", "Aniadir", new {  id=item.Id }) 
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

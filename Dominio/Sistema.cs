@@ -5,8 +5,8 @@ using System.Collections.Generic;
 namespace Dominio
 {
     public class Sistema
-    {       
-        private List<Servicio> servicios = new List<Servicio>();
+    {
+        public List<Servicio> servicios = new List<Servicio>();
         private List<Plato> platos = new List<Plato>();
         private List<Cliente> clientes = new List<Cliente>();
         public List<Mozo> mozos = new List<Mozo>();
@@ -18,42 +18,77 @@ namespace Dominio
             Precarga();
         }
 
+        public bool setPrecioMin(double monto)
+        {
+            bool ret = false;
+
+            if (monto > 0)
+            {
+                PrecioMin = monto;
+                ret = true;
+            }
+
+            return ret;
+        }
+
         public List<Servicio> GetServicio() { return servicios; }
+
         public List<Plato> GetPlatos() { return platos; }
+
         public List<Cliente> GetClientes() {
             clientes.Sort();
-            return clientes; 
+            return clientes;
         }
+
         public List<Mozo> GetMozos() { return mozos; }
-        public List<Repartidor> GetRepartidor() { return repartidores; }
+
+        public List<Repartidor> GetRepartidores() { return repartidores; }
 
         public static double GetPrecioMin() { return PrecioMin; }
 
-        public List<Servicio> GetServiciosRangoFecha(string nombre, DateTime f1, DateTime f2)
+
+
+        public List<Servicio> GetServiciosRangoFecha(string nombre, string apellido, DateTime f1, DateTime f2)
         {
 
             List<Servicio> ret = new List<Servicio>();
-            foreach (Servicio serv in servicios)
-            {
-                string nombreDelivery = "";
-                if (nombreDelivery == nombre && serv.Fecha > f1 && serv.Fecha < f2)
-                {
-                    ret.Add(serv);
-                }
+
+            foreach (Servicio serv in servicios) { 
+                ret.Add(serv.CrearListaRepartidoresRangoFecha(serv, nombre, apellido, f1, f2));
             }
             return ret;
 
         }
 
+        
+
         public Mozo AltaMozo(Mozo mozo)
         {
 
-            if (mozo.esValido())
+            if (mozo.EsValido())
             {
-                mozos.Add(mozo);
-                return mozo;
+                if (numeroNoExiste(mozo.NumeroFuncionario))
+                {
+                    mozos.Add(mozo);
+                    return mozo;
+                }
             }
             return null;
+        }
+
+        public bool numeroNoExiste(int num)
+        {
+            bool ret = true;
+
+            for (int i = 0; i < mozos.Count; i++)
+            {
+                int numero = mozos[i].NumeroFuncionario;
+                if (num == numero)
+                {
+                    ret = false;
+                }
+            }
+            return ret;
         }
 
         private void Precarga()
